@@ -10,7 +10,6 @@ This project is designed as a **practice application for learning DevOps tools**
 - Kubernetes (container orchestration)
 - Terraform (infrastructure as code)
 
----
 
 ## Features
 
@@ -19,13 +18,13 @@ This project is designed as a **practice application for learning DevOps tools**
 - Delete tasks
 - Clean modern UI with dark theme
 
----
 
 ## Project Structure
 
 DevOps-Task-API
 
 ## 📁 Project Structure
+```
 DevOps-Task-API/
 │
 ├── app.py
@@ -41,8 +40,7 @@ DevOps-Task-API/
 │
 └── tests/
     └── test_app.py
-
----
+```
 
 ## © Copyright
 
