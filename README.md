@@ -19,10 +19,6 @@ This project is designed as a **practice application for learning DevOps tools**
 - Clean modern UI with dark theme
 
 
-## Project Structure
-
-DevOps-Task-API
-
 ## 📁 Project Structure
 ```
 DevOps-Task-API/
