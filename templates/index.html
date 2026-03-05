@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ app_name }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="page">
+
+<div class="container">
+
+<h1>{{ app_name }}</h1>
+
+<form action="/add" method="post" class="task-form">
+<input type="text" name="task" placeholder="Add a new task..." required>
+<button class="btn-add" type="submit">Add</button>
+</form>
+
+<ul class="task-list">
+{% for task in tasks %}
+<li>
+
+<form action="/toggle/{{ loop.index0 }}" method="get">
+<input type="checkbox" onChange="this.form.submit()" {% if task.done %}checked{% endif %}>
+</form>
+
+<span class="{% if task.done %}done{% endif %}">
+{{ task.task }}
+</span>
+
+<a class="btn-delete" href="/delete/{{ loop.index0 }}">✕</a>
+
+</li>
+{% endfor %}
+</ul>
+
+</div>
+
+<footer>
+© 2026 xwazo — DevOps Task API
+</footer>
+
+</div>
+
+</body>
+</html>
