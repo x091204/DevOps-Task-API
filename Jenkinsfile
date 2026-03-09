@@ -1,5 +1,5 @@
 pipeline {
-    agent { label "Built-in Node" }
+    agent { label "Built-in" }
 
     stages {
         stage('Cloning repository') {
