@@ -4,8 +4,6 @@ A simple To-Do web application built with **Flask**, HTML, and CSS.
 
 This project is a **practice application for learning DevOps tools** and demonstrates a full CI/CD pipeline.
 
----
-
 ## 🛠️ DevOps Tools Used
 
 | Tool | Purpose | Status |
