@@ -19,5 +19,10 @@ pipeline {
                 sh "pytest"
             }
         }
+        stage('Docker build') {
+            steps {
+                sh "docker build -t Devops-task-api:1.0"
+            }
+        }
     }
 }
