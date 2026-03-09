@@ -32,6 +32,17 @@ pipeline {
                 sh "docker build -t devops-task-api:1.0 ."
             }
         }
+        stage('Docker tag and push') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'akifmhd', passwordVariable: 'Dockerhubpass', usernameVariable: 'Dockerhubusername')]) {
+                    sh '''
+                        echo "$Dockerhubpass" | docker login -u "$Dockerhubusername" --password-stdin
+                        docker tag devops-task-api:1.0 akifmhd/devops-task-api:1.0
+                        docker push akifmhd/devops-task-api:1.0
+                     '''
+                }
+            }
+        }
         stage('Docker Run') {
             steps {
                 sh '''
