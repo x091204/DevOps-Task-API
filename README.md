@@ -1,5 +1,7 @@
 # DevOps-Task-API
 
+use the mainv1 branch
+
 A simple To-Do web application built with **Flask**, HTML, and CSS.
 
 This project is designed as a **practice application for learning DevOps tools** such as:
