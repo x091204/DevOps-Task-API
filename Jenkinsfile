@@ -34,8 +34,26 @@ pipeline {
         }
         stage('Docker Run') {
             steps {
-                sh 'docker run -d -p 5000:5000 --name devops-app devops-task-api:1.0'
+                sh '''
+                    docker stop devops-app || true
+                    docker rm devops-app || true
+                    docker run -d -p 5000:5000 --name devops-app devops-task-api:1.0
+                '''
             }
+        }
+    }
+
+    post {
+
+    always {
+        cleanWs()
+        sh 'docker image prune -f'
+        }
+    success {
+        echo 'Pipeline completed successfully!'
+        }
+    failure {
+        echo 'Pipeline failed!'
         }
     }
 }
