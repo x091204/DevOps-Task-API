@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Docker Run') {
             steps {
-                    sh 'docker run --rm devops-task-api:1.0'
+                sh 'docker run --rm devops-task-api:1.0'
             }
         }
     }
