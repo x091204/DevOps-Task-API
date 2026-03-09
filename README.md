@@ -6,9 +6,9 @@ This project is designed as a **practice application for learning DevOps tools**
 
 - Jenkins (CI/CD pipelines)
 - Docker (containerization)
-- Trivy (security scanning)
-- Kubernetes (container orchestration)
-- Terraform (infrastructure as code)
+- Trivy (security scanning) - still have to work
+- Kubernetes (container orchestration) - still have to work
+- Terraform (infrastructure as code) - still have to work
 
 
 ## Features
