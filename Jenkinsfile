@@ -1,5 +1,5 @@
 pipeline {
-    agent { label "worker-nod" }
+    agent { label "Built-in Node" }
 
     stages {
         stage('Cloning repository') {
@@ -26,7 +26,7 @@ pipeline {
         }
         stage('Docker Run') {
             steps {
-                sh 'docker run --rm devops-task-api'
+                sh 'docker run --rm devops-task-api:1.0'
             }
         }
     }
