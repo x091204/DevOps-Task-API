@@ -34,7 +34,7 @@ pipeline {
         }
         stage('Docker Run') {
             steps {
-                sh 'docker run --rm devops-task-api:1.0'
+                sh 'docker run -d -p 5000:5000 --name devops-app devops-task-api:1.0'
             }
         }
     }
