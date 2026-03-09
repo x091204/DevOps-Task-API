@@ -54,7 +54,7 @@ pipeline {
                 sh '''
                     docker stop devops-app || true
                     docker rm devops-app || true
-                    docker run -d -p 5000:5000 --name devops-app ${IMAGE_NAME}:${IMAGE_TAG}
+                    docker run -d -p 5000:5000 --name devops-app ${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}
                 '''
             }
         }
