@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Docker build') {
             steps {
-                sh "docker build -t Devops-task-api:1.0"
+                sh "docker build -t Devops-task-api:1.0 ."
             }
         }
     }
