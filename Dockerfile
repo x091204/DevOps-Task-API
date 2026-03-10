@@ -1,5 +1,5 @@
 FROM python:3.11-slim
-RUN apt update && apt upgrade -y && apt clean
+RUN apt update && apt upgrade -y && apt clean && rm -rf /var/lib/apt/lists/*
 WORKDIR /home/app
 COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
