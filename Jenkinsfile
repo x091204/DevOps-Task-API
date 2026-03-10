@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Cloning repository') {
             steps {
-                git branch: 'main', changelog: false, poll: false, url: 'https://github.com/x091204/DevOps-Task-API.git'
+                git branch: 'mainv1', changelog: false, poll: false, url: 'https://github.com/x091204/DevOps-Task-API.git'
                 sh "pwd"
             
             }
