@@ -77,21 +77,21 @@ pipeline {
                     passwordVariable: 'Dockerhubpass',
                     usernameVariable: 'Dockerhubusername'
                       )]) {
-                    sh '''
+                    sh """
                         echo "$Dockerhubpass" | docker login -u "$Dockerhubusername" --password-stdin
                         docker tag devops-task-api:${IMAGE_TAG} ${DOCKER_USER}/devops-task-api:${IMAGE_TAG}
                         docker push ${DOCKER_USER}/devops-task-api:${IMAGE_TAG}
-                     '''
+                     """
                 }
             }
         }
         stage('Deploy') {
             steps {
-                sh '''
+                sh """
                     docker stop devops-app || true
                     docker rm devops-app || true
                     docker run -d -p 5000:5000 --name devops-app ${FULL_IMAGE}
-                '''
+                """
             }
         }
     }
@@ -101,10 +101,10 @@ pipeline {
     always {
         archiveArtifacts artifacts: 'reports/*', allowEmptyArchive: true
         cleanWs( patterns: [[pattern: '.trivy_cache/**', type: 'EXCLUDE']])
-        sh '''
+        sh """
                 docker image prune -f
                 docker images ${IMAGE_NAME} --format "{{.Tag}}" | sort -r | tail -n +4 | xargs -I {} docker rmi ${IMAGE_NAME}:{} || true
-            '''
+            """
         }
         success { echo "Build ${BUILD_NUMBER} passed — image pushed as ${FULL_IMAGE}" }
         failure { echo "Build ${BUILD_NUMBER} failed — check Trivy report in artifacts" }
