@@ -44,6 +44,10 @@ pipeline {
             steps {
 
                 sh "mkdir -p ${TRIVY_CACHE_DIR} reports"
+                sh '''
+                 mkdir -p trivy
+                 wget https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl -O trivy/html.tpl
+                '''
 
                 sh """
                  trivy image \
@@ -63,7 +67,7 @@ pipeline {
                 trivy image \
                  --cache-dir ${TRIVY_CACHE_DIR} \
                  --format cyclonedx \
-                 --output report/sbom.json \
+                 --output reports/sbom.json \
                  ${IMAGE_NAME}:${IMAGE_TAG}
                 """
                 archiveArtifacts artifacts: 'reports/*', fingerprint: true
