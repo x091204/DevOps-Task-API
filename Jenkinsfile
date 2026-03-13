@@ -7,7 +7,6 @@ pipeline {
         DOCKER_USER = "akifmhd"
         FULL_IMAGE = "${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
         TRIVY_CACHE_DIR = "${WORKSPACE}/.trivy_cache"
-###TRIVY_ARGS = "--cache-dir ${TRIVY_CACHE_DIR} --severity HIGH,CRITICAL --ignore-unfixed --scanners vuln --ignorefile .trivyignore"
         REPORTS_DIR = "${WORKSPACE}/reports"
 
     }
