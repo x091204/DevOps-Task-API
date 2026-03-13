@@ -42,6 +42,9 @@ pipeline {
         }
         stage('Trivy scan') {
             steps {
+
+                sh "mkdir -p ${TRIVY_CACHE_DIR} reports"
+
                 sh """
                  trivy image \
                  --cache-dir ${TRIVY_CACHE_DIR} \
