@@ -50,6 +50,20 @@ pipeline {
                 sh "wget https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl -O trivy/html.tpl"
 
                 sh """
+                 trivy image \
+                    --cache-dir ${TRIVY_CACHE_DIR} \
+                    --severity HIGH,CRITICAL \
+                    --ignore-unfixed \
+                    --scanners vuln \
+                    --ignorefile .trivyignore \
+                    --exit-code 1 \
+                    --format template \
+                    --template @trivy/html.tpl \
+                    --output ${REPORT_DIR}/trivy-image.html \
+                    ${IMAGE_NAME}:${IMAGE_TAG} 
+                """
+
+                sh """
                 trivy image \
                     --cache-dir ${TRIVY_CACHE_DIR} \
                     --severity HIGH,CRITICAL \
@@ -60,22 +74,6 @@ pipeline {
                     --output ${REPORT_DIR}/sbom.json \
                     ${IMAGE_NAME}:${IMAGE_TAG}
                 """
-
-                sh """
-                 trivy image \
-                    --cache-dir ${TRIVY_CACHE_DIR} \
-                    --severity HIGH,CRITICAL \
-                    --ignore-unfixed \
-                    --scanners vuln \
-                    --ignorefile .trivyignore \
-                    --exit-code 1 \
-                    --format template \
-                    --template @trivy/html.tpl \
-                    --output reports/trivy-image.html \
-                    ${IMAGE_NAME}:${IMAGE_TAG}
-                """
-
-                
                 archiveArtifacts artifacts: 'reports/*', fingerprint: true
 
             }
