@@ -7,7 +7,7 @@ pipeline {
         DOCKER_USER = "akifmhd"
         FULL_IMAGE = "${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
         TRIVY_CACHE_DIR = "${WORKSPACE}/.trivy_cache"
-        TRIVY_ARGS = "--cache-dir ${TRIVY_CACHE_DIR} --severity HIGH,CRITICAL --ignore-unfixed --scanner vuln --ignorefile .trivyignore"
+        TRIVY_ARGS = "--cache-dir ${TRIVY_CACHE_DIR} --severity HIGH,CRITICAL --ignore-unfixed --scanners vuln --ignorefile .trivyignore"
         REPORTS_DIR = "${WORKSPACE}/reports"
 
     }
@@ -57,7 +57,7 @@ pipeline {
                     --format template \
                     --template @trivy/html.tpl \
                     --output reports/trivy-image.html \
-                    ${IMAGE_NAME}:${IMAGE_TAG}
+                    $
                 """
 
                 sh """
