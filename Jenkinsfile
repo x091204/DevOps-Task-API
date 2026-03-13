@@ -5,6 +5,7 @@ pipeline {
         IMAGE_NAME = "devops-task-api"
         IMAGE_TAG = "1.${BUILD_NUMBER}"
         DOCKER_USER = "akifmhd"
+        TRIVY_CACHE_DIR = "${WORKSPACE}/.trivy_cache"
     }
 
     stages {
@@ -43,13 +44,27 @@ pipeline {
             steps {
                 sh """
                  trivy image \
+                 --cache-dir ${TRIVY_CACHE_DIR} \
                  --severity HIGH,CRITICAL \
                  --ignore-unfixed \
+                 --scanners vuln \
                  --ignorefile .trivyignore \
                  --exit-code 1 \
+                 --format template \
+                 --template @trivy/html.tpl \
+                 --output reports/trivy-image.html \
                  ${IMAGE_NAME}:${IMAGE_TAG}
 
                 """
+                sh """
+                trivy image \
+                 --cache-dir ${TRIVY_CACHE_DIR} \
+                 --format cyclonedx \
+                 --output report/sbom.json \
+                 ${IMAGE_NAME}:${IMAGE_TAG}
+                """
+                archiveArtifacts artifacts: 'reports/*', fingerprint: true
+
             }
         }
         stage('Docker tag and push') {
