@@ -48,7 +48,7 @@ pipeline {
             steps {
 
                 sh "mkdir -p ${TRIVY_CACHE_DIR} ${REPORTS_DIR} trivy"
-                sh wget "https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl -O trivy/html.tpl"
+                sh "wget https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl -O trivy/html.tpl"
 
                 sh """
                  trivy image \
