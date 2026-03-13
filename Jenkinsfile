@@ -57,7 +57,6 @@ pipeline {
                     --format template \
                     --template @trivy/html.tpl \
                     --output reports/trivy-image.html \
-                    $
                 """
 
                 sh """
