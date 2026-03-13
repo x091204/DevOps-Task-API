@@ -1,0 +1,83 @@
+{
+  "$schema": "http://cyclonedx.org/schema/bom-1.6.schema.json",
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:79e3afde-82a5-4ac9-8a4c-920e1ad2fd1d",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-03-12T07:20:38+00:00",
+    "tools": {
+      "components": [
+        {
+          "type": "application",
+          "manufacturer": {
+            "name": "Aqua Security Software Ltd."
+          },
+          "group": "aquasecurity",
+          "name": "trivy",
+          "version": "0.69.3"
+        }
+      ]
+    },
+    "component": {
+      "bom-ref": "1368b0ec-2777-490d-a52a-d82103e500ff",
+      "type": "application",
+      "name": ".",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:SchemaVersion",
+          "value": "2"
+        }
+      ]
+    }
+  },
+  "components": [
+    {
+      "bom-ref": "6503c45f-d9ec-4a27-bf0f-5fcef230dee9",
+      "type": "application",
+      "name": "requirements.txt",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:Class",
+          "value": "lang-pkgs"
+        },
+        {
+          "name": "aquasecurity:trivy:Type",
+          "value": "pip"
+        }
+      ]
+    },
+    {
+      "bom-ref": "pkg:pypi/flask@3.0.3",
+      "type": "library",
+      "name": "Flask",
+      "version": "3.0.3",
+      "purl": "pkg:pypi/flask@3.0.3",
+      "properties": [
+        {
+          "name": "aquasecurity:trivy:PkgType",
+          "value": "pip"
+        }
+      ]
+    }
+  ],
+  "dependencies": [
+    {
+      "ref": "1368b0ec-2777-490d-a52a-d82103e500ff",
+      "dependsOn": [
+        "6503c45f-d9ec-4a27-bf0f-5fcef230dee9"
+      ]
+    },
+    {
+      "ref": "6503c45f-d9ec-4a27-bf0f-5fcef230dee9",
+      "dependsOn": [
+        "pkg:pypi/flask@3.0.3"
+      ]
+    },
+    {
+      "ref": "pkg:pypi/flask@3.0.3",
+      "dependsOn": []
+    }
+  ],
+  "vulnerabilities": []
+}
