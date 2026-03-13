@@ -7,7 +7,7 @@ pipeline {
         DOCKER_USER = "akifmhd"
         FULL_IMAGE = "${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
         TRIVY_CACHE_DIR = "${WORKSPACE}/.trivy_cache"
-        TRIVY_ARGS = "--cache-dir ${TRIVY_CACHE_DIR} --severity HIGH,CRITICAL --ignore-unfixed --scanners vuln --ignorefile .trivyignore"
+###TRIVY_ARGS = "--cache-dir ${TRIVY_CACHE_DIR} --severity HIGH,CRITICAL --ignore-unfixed --scanners vuln --ignorefile .trivyignore"
         REPORTS_DIR = "${WORKSPACE}/reports"
 
     }
@@ -52,7 +52,11 @@ pipeline {
 
                 sh """
                  trivy image \
-                    ${TRIVY_ARGS} \
+                    --cache-dir ${TRIVY_CACHE_DIR} \
+                    --severity HIGH,CRITICAL \
+                    --ignore-unfixed \
+                    --scanners vuln \
+                    --ignorefile .trivyignore \
                     --exit-code 1 \
                     --format template \
                     --template @trivy/html.tpl \
@@ -60,7 +64,12 @@ pipeline {
                 """
 
                 sh """
-                trivy image ${TRIVY_ARGS} \
+                trivy image \
+                    --cache-dir ${TRIVY_CACHE_DIR} \
+                    --severity HIGH,CRITICAL \
+                    --ignore-unfixed \
+                    --scanners vuln \
+                    --ignorefile .trivyignore \
                     --format cyclonedx \
                     --output ${REPORT_DIR}/sbom.json \
                     ${IMAGE_NAME}:${IMAGE_TAG}
