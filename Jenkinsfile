@@ -41,14 +41,15 @@ pipeline {
         }
         stage('Trivy scan') {
             steps {
-                sh '''
+                sh """
                  trivy image \
                  --severity HIGH,CRITICAL \
                  --ignore-unfixed \
                  --ignorefile .trivyignore \
                  --exit-code 1 \
+                 ${IMAGE_NAME}:${IMAGE_TAG}
 
-                '''
+                """
             }
         }
         stage('Docker tag and push') {
