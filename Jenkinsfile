@@ -39,6 +39,18 @@ pipeline {
                 sh "docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ."
             }
         }
+        stage('Trivy scan') {
+            steps {
+                sh '''
+                 trivy image \
+                 --severity HIGH,CRITICAL \
+                 --ignore-unfixed \
+                 --ignorefile .trivyignore \
+                 --exit-code 1 \
+
+                '''
+            }
+        }
         stage('Docker tag and push') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'akifmhd', passwordVariable: 'Dockerhubpass', usernameVariable: 'Dockerhubusername')]) {
