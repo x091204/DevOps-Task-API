@@ -51,6 +51,7 @@ pipeline {
                 sh "trivy --version"
                 sh """
                 trivy image \
+                --cache-dir ${TRIVY_CACHE_DIR} \
                 --severity HIGH,CRITICAL \
                 --ignore-unfixed \
                 --ignorefile .trivyignore \
