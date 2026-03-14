@@ -55,6 +55,9 @@ pipeline {
                 --severity HIGH,CRITICAL \
                 --ignore-unfixed \
                 --ignorefile .trivyignore \
+                --format template \
+                -- template @trivy/html.tpl \
+                --output ${REPORTS_DIR}/trivy-image.html \
                 ${IMAGE_NAME}:${IMAGE_TAG}
                 """
 
