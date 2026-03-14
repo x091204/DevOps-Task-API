@@ -21,20 +21,20 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh '''
+                sh """
                     pwd
                     python3 -m venv venv
                     . venv/bin/activate
                     pip install -r requirements-dev.txt
-                '''
+                """
             }
         }
         stage('Test') {
             steps {
-                sh '''
+                sh """
                     . venv/bin/activate
                     pytest tests/
-                '''
+                """
 
             }
         }
@@ -49,20 +49,7 @@ pipeline {
                 sh "mkdir -p ${TRIVY_CACHE_DIR} ${REPORTS_DIR} trivy"
                 sh "wget https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl -O trivy/html.tpl"
                 sh "trivy --version"
-
-                sh """
-                 trivy image \
-                    --cache-dir ${TRIVY_CACHE_DIR} \
-                    --severity HIGH,CRITICAL \
-                    --ignore-unfixed \
-                    --scanners vuln \
-                    --ignorefile .trivyignore \
-                    --exit-code 1 \
-                    --format template \
-                    --template @trivy/html.tpl \
-                    --output ${REPORT_DIR}/trivy-image.html \
-                    ${IMAGE_NAME}:${IMAGE_TAG} 
-                """
+                sh "trivy image --cache-dir ${TRIVY_CACHE_DIR} --severity HIGH,CRITICAL --ignore-unfixed --scanners vuln --ignorefile .trivyignore --exit-code 1 --format template --template @trivy/html.tpl --output ${REPORT_DIR}/trivy-image.html ${IMAGE_NAME}:${IMAGE_TAG}"
 
                 sh """
                 trivy image \
