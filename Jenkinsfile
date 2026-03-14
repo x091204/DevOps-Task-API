@@ -61,6 +61,16 @@ pipeline {
                 --exit-code 1 \
                 ${IMAGE_NAME}:${IMAGE_TAG}
                 """
+                sh """
+                trivy image \
+                --cache-dir ${TRIVY_CACHE_DIR} \
+                --severity HIGH,CRITICAL \
+                --scanners vuln \
+                --ignorefile .trivyignore \
+                --format cyclonedx \
+                --output ${REPORTS_DIR}/sbom.json \
+                ${IMAGE_NAME}:${IMAGE_TAG}
+                """
 
                 
 
