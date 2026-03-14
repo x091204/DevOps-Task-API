@@ -58,6 +58,7 @@ pipeline {
                 --format template \
                 -- template @trivy/html.tpl \
                 --output ${REPORTS_DIR}/trivy-image.html \
+                --exit-code 1 \
                 ${IMAGE_NAME}:${IMAGE_TAG}
                 """
 
