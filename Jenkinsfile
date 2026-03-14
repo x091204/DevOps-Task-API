@@ -49,6 +49,13 @@ pipeline {
                 sh "mkdir -p ${TRIVY_CACHE_DIR} ${REPORTS_DIR} trivy"
                 sh "wget https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl -O trivy/html.tpl"
                 sh "trivy --version"
+                sh """
+                trivy image \
+                --severity HIGH,CRITICAL \
+                --ignore-unfixed \
+                --ignorefile .trivyignore \
+                ${IMAGE_NAME}:${IMAGE_TAG}
+                """
 
                 
 
