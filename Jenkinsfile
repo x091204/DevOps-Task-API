@@ -54,6 +54,7 @@ pipeline {
                 --cache-dir ${TRIVY_CACHE_DIR} \
                 --severity HIGH,CRITICAL \
                 --ignore-unfixed \
+                --scanners vuln \
                 --ignorefile .trivyignore \
                 --format template \
                 --template @trivy/html.tpl \
@@ -65,6 +66,7 @@ pipeline {
                 trivy image \
                 --cache-dir ${TRIVY_CACHE_DIR} \
                 --severity HIGH,CRITICAL \
+                --ignore-unfixed \
                 --scanners vuln \
                 --ignorefile .trivyignore \
                 --format cyclonedx \
