@@ -6,16 +6,13 @@ import time
 app = Flask(__name__)
 
 APP_NAME = "DevOps-Task-API"
-with app.app_context():
-    init_db()
 
 DB_CONFIG = {
     "host": os.getenv("MYSQL_HOST", "localhost"),
     "user": os.getenv("MYSQL_USER", "root"),
-    "password": os.getenv("MYSQL_PASSWORD", "DevOps@123"),
+    "password": os.getenv("MYSQL_PASSWORD", ""),
     "database": os.getenv("MYSQL_DB", "tasksdb"),
-    "cursorclass": pymysql.cursors.DictCursor,
-    
+    "cursorclass": pymysql.cursors.DictCursor
 }
 
 
@@ -34,10 +31,8 @@ def init_db():
                 cursorclass=pymysql.cursors.DictCursor
             )
             with conn.cursor() as cursor:
-                # Create database if not exists
                 cursor.execute("CREATE DATABASE IF NOT EXISTS tasksdb")
                 cursor.execute("USE tasksdb")
-                # Create table if not exists
                 cursor.execute("""
                     CREATE TABLE IF NOT EXISTS tasks (
                         id INT AUTO_INCREMENT PRIMARY KEY,
@@ -48,12 +43,16 @@ def init_db():
                 """)
             conn.commit()
             conn.close()
-            print("Database initialized successfully!")
+            print("✅ Database initialized successfully!")
             break
         except Exception as e:
             print(f"⏳ Waiting for MySQL... {retries} retries left. Error: {e}")
             retries -= 1
             time.sleep(3)
+
+
+# Call after defining
+init_db()
 
 
 @app.route("/")
@@ -102,6 +101,10 @@ def delete_task(task_id):
     return redirect("/")
 
 
+@app.route("/health")
+def health():
+    return "OK", 200
+
+
 if __name__ == "__main__":
-    init_db()
     app.run(host="0.0.0.0", port=5000, debug=True)
