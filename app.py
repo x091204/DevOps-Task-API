@@ -10,7 +10,7 @@ APP_NAME = "DevOps-Task-API"
 DB_CONFIG = {
     "host": os.getenv("MYSQL_HOST", "localhost"),
     "user": os.getenv("MYSQL_USER", "root"),
-    "password": os.getenv("MYSQL_PASSWORD", "DevOps@123"),git 
+    "password": os.getenv("MYSQL_PASSWORD", "DevOps@123"),
     "database": os.getenv("MYSQL_DB", "tasksdb"),
     "cursorclass": pymysql.cursors.DictCursor,
     "unix_socket": "/var/lib/mysql/mysql.sock"
