@@ -9,12 +9,12 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - mysql-database:/var/lib/mysql
+      - mysql_database:/var/lib/mysql
     networks:
       - devops-net
     restart: always
     healthcheck:
-      test: ["CMD","ping","mysqladmin","-h","localhost","-uroot","-pDevOps@123"]
+      test: ["CMD","mysqladmin","ping","-h","localhost","-uroot","-pDevOps@123"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -35,12 +35,6 @@ services:
       db:
         condition: service_healthy
     restart: always
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-      start_period: 60s
 volumes:
   mysql_database:
 networks:
