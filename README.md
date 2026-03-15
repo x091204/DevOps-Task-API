@@ -136,4 +136,4 @@ App runs at: `http://localhost:5000`
 ---
 
 ## © Copyright
-© 2026 xwazo — Built as part of my DevOps learning journey.
+© 2026 akifmuhammed — Built as part of my DevOps learning journey.
