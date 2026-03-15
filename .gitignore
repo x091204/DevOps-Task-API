@@ -5,3 +5,7 @@ venv/
 .env
 *.log
 .pytest_cache/
+reports/
+*.json
+trivy-report*
+sbom.json
