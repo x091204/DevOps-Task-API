@@ -13,7 +13,7 @@ DB_CONFIG = {
     "password": os.getenv("MYSQL_PASSWORD", "DevOps@123"),
     "database": os.getenv("MYSQL_DB", "tasksdb"),
     "cursorclass": pymysql.cursors.DictCursor,
-    "unix_socket": "/var/lib/mysql/mysql.sock"
+    
 }
 
 
