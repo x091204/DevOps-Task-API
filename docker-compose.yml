@@ -14,7 +14,7 @@ services:
       - devops-net
     restart: always
     healthcheck:
-      test: ["CMD","mysqladmin","ping","-h","localhost","-uroot","-pDevOps@123"]
+      test: ["CMD","mysqladmin","ping","-h","localhost","-uroot","-p${MYSQL_ROOT_PASSWORD}"]
       interval: 10s
       timeout: 5s
       retries: 5
