@@ -22,7 +22,7 @@
 {% for task in tasks %}
 <li>
 
-<form action="/toggle/{{ loop.index0 }}" method="get">
+<form action="/toggle/{{ task.id }}" method="get"></form>
 <input type="checkbox" onChange="this.form.submit()" {% if task.done %}checked{% endif %}>
 </form>
 
@@ -30,7 +30,7 @@
 {{ task.task }}
 </span>
 
-<a class="btn-delete" href="/delete/{{ loop.index0 }}">✕</a>
+<a class="btn-delete" href="/delete/{{ task.id }}">✕</a>
 
 </li>
 {% endfor %}
