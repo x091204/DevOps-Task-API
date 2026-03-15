@@ -6,6 +6,8 @@ import time
 app = Flask(__name__)
 
 APP_NAME = "DevOps-Task-API"
+with app.app_context():
+    init_db()
 
 DB_CONFIG = {
     "host": os.getenv("MYSQL_HOST", "localhost"),
