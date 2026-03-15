@@ -4,14 +4,14 @@ services:
     container_name: database
     image: mysql
     environment:
-      MYSQL_DATABASE: tasksdb
-      MYSQL_ROOT_PASSWORD: DevOps@123
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
       - mysql-database:/var/lib/mysql
     networks:
-      - devops-task-api
+      - devops-net
     restart: always
     healthcheck:
       test: ["CMD","ping","-h","localhost","-uroot","-pDevOps@123"]
@@ -19,3 +19,29 @@ services:
       timeout: 5s
       retries: 5
       start_period: 30s
+  flask:
+    build: .
+    container_name: devops-task-api
+    ports:
+      - "5000:5000"
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_USER= ${MYSQL_USER}
+      - MYSQL_PASSWORD= ${MYSQL_PASSWORD}
+      - MYSQL_DB= ${MYSQL_DATABASE}
+    networks:
+      - devops-net
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5000/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+volumes:
+  mysql_data:
+networks:
+  devops-net:
