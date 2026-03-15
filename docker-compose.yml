@@ -13,4 +13,9 @@ services:
     networks:
       - devops-task-api
     restart: always
-         
+    healthcheck:
+      test: ["CMD","ping","-h","localhost","-uroot","-pDevOps@123"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
