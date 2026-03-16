@@ -1,6 +1,6 @@
 # DevOps-Task-API 🚀
 
-A simple To-Do web application built with **Flask**, HTML, and CSS — used as a hands-on project to learn and implement real-world DevOps tools and practices.
+A To-Do web application built with **Flask**, **MySQL**, HTML, and CSS — used as a hands-on project to learn and implement real-world DevOps tools and practices.
 
 > Instead of just watching tutorials, I built something real and applied every DevOps tool I learn directly to a working project.
 
@@ -11,11 +11,12 @@ A simple To-Do web application built with **Flask**, HTML, and CSS — used as a
 | Tool | Purpose | Status |
 |------|---------|--------|
 | Python / Flask | Web application | ✅ Done |
+| MySQL | Database Backend | ✅ Done |
 | Jenkins | CI/CD Pipeline | ✅ Done |
 | Docker | Containerization | ✅ Done |
 | Docker Hub | Image Registry | ✅ Done |
 | Trivy | Security Scanning + SBOM | ✅ Done |
-| Docker Compose | Multi-container setup | ⏳ In Progress |
+| Docker Compose | Multi-container setup | ✅ Done |
 | Kubernetes | Container Orchestration | ⏳ In Progress |
 | Terraform | Infrastructure as Code | ⏳ In Progress |
 | Prometheus | Metrics & Monitoring | ⏳ In Progress |
@@ -35,11 +36,26 @@ Code Push → Clone → Build → Test → Docker Build → Trivy Scan → Push 
 |-------|-------------|
 | Clone | Pull latest code from GitHub |
 | Build | Create venv + install dependencies |
-| Test | Run pytest test suite |
+| Test | Run pytest test suite with mocked DB |
 | Docker Build | Build image tagged with BUILD_NUMBER |
 | Trivy Scan | Scan for HIGH/CRITICAL vulnerabilities + generate SBOM |
 | Push | Push verified image to Docker Hub |
-| Deploy | Stop old container, run new one |
+| Deploy | Docker Compose brings up Flask + MySQL |
+
+---
+
+## 🏛️ Architecture
+
+```
+                    Jenkins CI/CD
+                         ↓
+GitHub Push → Build → Test → Trivy Scan → DockerHub
+                                               ↓
+                                    Docker Compose Deploy
+                                         ↓         ↓
+                                    Flask App    MySQL DB
+                                    (port 5000)  (persistent volume)
+```
 
 ---
 
@@ -49,7 +65,8 @@ Code Push → Clone → Build → Test → Docker Build → Trivy Scan → Push 
 - HTML vulnerability report archived as Jenkins artifact
 - SBOM generated in CycloneDX format every build
 - Pipeline fails automatically if HIGH/CRITICAL vulnerabilities found
-- Credentials managed securely via Jenkins credentials store
+- Credentials managed securely — never hardcoded
+- `.env` file never committed to Git
 
 ---
 
@@ -58,7 +75,9 @@ Code Push → Clone → Build → Test → Docker Build → Trivy Scan → Push 
 - Add tasks
 - Mark tasks as completed
 - Delete tasks
+- Data persists across restarts (MySQL backend)
 - Clean modern UI with dark theme
+- Health check endpoint (`/health`)
 
 ---
 
@@ -66,10 +85,11 @@ Code Push → Clone → Build → Test → Docker Build → Trivy Scan → Push 
 
 ```
 DevOps-Task-API/
-├── app.py                  ← Flask application
+├── app.py                  ← Flask application + MySQL connection
 ├── requirements.txt        ← Production dependencies
 ├── requirements-dev.txt    ← Dev/test dependencies
 ├── Dockerfile              ← Container definition
+├── docker-compose.yml      ← Multi-container setup (Flask + MySQL)
 ├── .dockerignore           ← Files excluded from Docker image
 ├── .gitignore              ← Files excluded from Git
 ├── .trivyignore            ← Accepted/false positive CVEs
@@ -80,7 +100,7 @@ DevOps-Task-API/
 ├── static/
 │   └── style.css           ← Styling
 └── tests/
-    └── test_app.py         ← Application tests
+    └── test_app.py         ← Application tests (mocked DB)
 ```
 
 ---
@@ -92,15 +112,14 @@ DevOps-Task-API/
 git clone https://github.com/x091204/DevOps-Task-API.git
 cd DevOps-Task-API
 
-# Create virtual environment
-python3 -m venv venv
-source venv/bin/activate
+# Create .env file with your credentials
+# MYSQL_ROOT_PASSWORD=yourpassword
+# MYSQL_DATABASE=tasksdb
+# MYSQL_USER=root
+# MYSQL_PASSWORD=yourpassword
 
-# Install dependencies
-pip install -r requirements-dev.txt
-
-# Run the app
-python app.py
+# Run with Docker Compose
+docker-compose up -d
 ```
 
 App runs at: `http://localhost:5000`
@@ -113,7 +132,8 @@ App runs at: `http://localhost:5000`
 - [x] Docker containerization
 - [x] Docker Hub image registry
 - [x] Trivy security scanning + SBOM
-- [ ] Docker Compose multi-container setup
+- [x] Docker Compose multi-container setup
+- [x] MySQL persistent database
 - [ ] Kubernetes deployment
 - [ ] Terraform infrastructure provisioning
 - [ ] AWS deployment with Load Balancer + Auto Scaling
@@ -127,7 +147,7 @@ App runs at: `http://localhost:5000`
 |-------|-------|--------|
 | Phase 1 | Jenkins + Docker + DockerHub | ✅ Done |
 | Phase 2 | Trivy Security Scanning | ✅ Done |
-| Phase 3 | Docker Compose | ⏳ In Progress |
+| Phase 3 | Docker Compose + MySQL | ✅ Done |
 | Phase 4 | Kubernetes | ⏳ In Progress |
 | Phase 5 | Terraform | ⏳ In Progress |
 | Phase 6 | AWS + Load Balancer + Auto Scaling | ⏳ In Progress |
