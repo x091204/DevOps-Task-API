@@ -104,8 +104,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh """
-                    FULL_IMAGE=${FULL_IMAGE} docker compose down || true
-                    FULL_IMAGE=${FULL_IMAGE} docker compose up -d
+                    FULL_IMAGE=${FULL_IMAGE} docker-compose down || true
+                    FULL_IMAGE=${FULL_IMAGE} docker-compose up -d
                 """
             }
         }
