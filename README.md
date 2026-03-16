@@ -147,7 +147,7 @@ App runs at: `http://localhost:5000`
 |-------|-------|--------|
 | Phase 1 | Jenkins + Docker + DockerHub | ✅ Done |
 | Phase 2 | Trivy Security Scanning | ✅ Done |
-| Phase 3 | Docker Compose + MySQL | ✅ Done |
+| Phase 3 | Docker Compose | ✅ Done |
 | Phase 4 | Kubernetes | ⏳ In Progress |
 | Phase 5 | Terraform | ⏳ In Progress |
 | Phase 6 | AWS + Load Balancer + Auto Scaling | ⏳ In Progress |
