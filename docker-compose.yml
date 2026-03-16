@@ -20,6 +20,7 @@ services:
       retries: 5
       start_period: 30s
   flask:
+    image: ${FULL_IMAGE}
     build: .
     container_name: devops-task-api
     ports:

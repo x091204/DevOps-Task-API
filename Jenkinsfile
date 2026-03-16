@@ -97,9 +97,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh """
-                    docker stop devops-app || true
-                    docker rm devops-app || true
-                    docker run -d -p 5000:5000 --name devops-app ${FULL_IMAGE}
+                    FULL_IMAGE=${FULL_IMAGE} docker compose down || true
+                    FULL_IMAGE=${FULL_IMAGE} docker compose up -d
                 """
             }
         }
