@@ -8,6 +8,7 @@ pipeline {
         FULL_IMAGE = "${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
         TRIVY_CACHE_DIR = "${WORKSPACE}/.trivy_cache"
         REPORTS_DIR = "${WORKSPACE}/reports"
+        ENV_FILE= "/root/.env"
 
     }
 
@@ -104,8 +105,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh """
-                    FULL_IMAGE=${FULL_IMAGE} docker-compose --env-file .env down || true
-                    FULL_IMAGE=${FULL_IMAGE} docker-compose --env-file .env up -d
+                    FULL_IMAGE=${FULL_IMAGE} docker-compose --env-file ${ENV_FILE} down || true
+                    FULL_IMAGE=${FULL_IMAGE} docker-compose --env-file ${ENV_FILE} up -d
                 """
             }
         }
