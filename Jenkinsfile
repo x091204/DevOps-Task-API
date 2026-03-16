@@ -114,6 +114,7 @@ pipeline {
     post {
 
     always {
+        sh "ls -la ${REPORTS_DIR}/"
         archiveArtifacts artifacts: 'reports/*', allowEmptyArchive: true
         cleanWs( patterns: [[pattern: '.trivy_cache/**', type: 'EXCLUDE']])
         sh """
