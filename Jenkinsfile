@@ -8,6 +8,7 @@ pipeline {
         FULL_IMAGE = "${DOCKER_USER}/${IMAGE_NAME}:${IMAGE_TAG}"
         TRIVY_CACHE_DIR = "${WORKSPACE}/.trivy_cache"
         REPORTS_DIR = "${WORKSPACE}/reports"
+        ENV_FILE= "/root/.env"
 
     }
 
@@ -59,7 +60,7 @@ pipeline {
                 --format template \
                 --template @trivy/html.tpl \
                 --output ${REPORTS_DIR}/trivy-image.html \
-                --exit-code 1 \
+                --exit-code 0 \
                 ${IMAGE_NAME}:${IMAGE_TAG}
                 """
                 sh """
@@ -71,12 +72,19 @@ pipeline {
                 --ignorefile .trivyignore \
                 --format cyclonedx \
                 --output ${REPORTS_DIR}/sbom.json \
+                --exit-code 0 \
                 ${IMAGE_NAME}:${IMAGE_TAG}
                 """
-
-                
-
-                
+                sh """
+                trivy image \
+                --cache-dir ${TRIVY_CACHE_DIR} \
+                --severity HIGH,CRITICAL \
+                --ignore-unfixed \
+                --scanners vuln \
+                --ignorefile .trivyignore \
+                --exit-code 1 \
+                ${IMAGE_NAME}:${IMAGE_TAG}
+                """
             }
         }
         stage('Docker tag and push') {
@@ -97,9 +105,8 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh """
-                    docker stop devops-app || true
-                    docker rm devops-app || true
-                    docker run -d -p 5000:5000 --name devops-app ${FULL_IMAGE}
+                    FULL_IMAGE=${FULL_IMAGE} docker-compose --env-file ${ENV_FILE} down || true
+                    FULL_IMAGE=${FULL_IMAGE} docker-compose --env-file ${ENV_FILE} up -d
                 """
             }
         }
@@ -108,6 +115,7 @@ pipeline {
     post {
 
     always {
+        sh "ls -la ${REPORTS_DIR}/"
         archiveArtifacts artifacts: 'reports/*', allowEmptyArchive: true
         cleanWs( patterns: [[pattern: '.trivy_cache/**', type: 'EXCLUDE']])
         sh """
