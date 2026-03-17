@@ -1,6 +1,6 @@
 # DevOps-Task-API 🚀
 
-A To-Do web application built with **Flask**, **MySQL**, HTML, and CSS — used as a hands-on project to learn and implement real-world DevOps tools and practices.
+A two-tier To-Do web application built with **Flask** and **MySQL** — used as a hands-on project to learn and implement real-world DevOps tools and practices.
 
 > Instead of just watching tutorials, I built something real and applied every DevOps tool I learn directly to a working project.
 
@@ -10,18 +10,11 @@ A To-Do web application built with **Flask**, **MySQL**, HTML, and CSS — used 
 
 | Tool | Purpose | Status |
 |------|---------|--------|
-| Python / Flask | Web application | ✅ Done |
-| MySQL | Database Backend | ✅ Done |
 | Jenkins | CI/CD Pipeline | ✅ Done |
 | Docker | Containerization | ✅ Done |
 | Docker Hub | Image Registry | ✅ Done |
 | Trivy | Security Scanning + SBOM | ✅ Done |
 | Docker Compose | Multi-container setup | ✅ Done |
-| Kubernetes | Container Orchestration | ⏳ In Progress |
-| Terraform | Infrastructure as Code | ⏳ In Progress |
-| Prometheus | Metrics & Monitoring | ⏳ In Progress |
-| Grafana | Monitoring Dashboards | ⏳ In Progress |
-| AWS | Cloud Deployment | ⏳ In Progress |
 
 ---
 
@@ -134,24 +127,8 @@ App runs at: `http://localhost:5000`
 - [x] Trivy security scanning + SBOM
 - [x] Docker Compose multi-container setup
 - [x] MySQL persistent database
-- [ ] Kubernetes deployment
-- [ ] Terraform infrastructure provisioning
-- [ ] AWS deployment with Load Balancer + Auto Scaling
-- [ ] Prometheus + Grafana monitoring
-
----
-
-## 📅 Timeline
-
-| Phase | Tasks | Status |
-|-------|-------|--------|
-| Phase 1 | Jenkins + Docker + DockerHub | ✅ Done |
-| Phase 2 | Trivy Security Scanning | ✅ Done |
-| Phase 3 | Docker Compose | ✅ Done |
-| Phase 4 | Kubernetes | ⏳ In Progress |
-| Phase 5 | Terraform | ⏳ In Progress |
-| Phase 6 | AWS + Load Balancer + Auto Scaling | ⏳ In Progress |
-| Phase 7 | Prometheus + Grafana | ⏳ In Progress |
+- [x] Automated testing with mocked DB
+- [x] Health check endpoint
 
 ---
 
